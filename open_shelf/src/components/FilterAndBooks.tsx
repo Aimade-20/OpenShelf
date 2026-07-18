@@ -1,14 +1,28 @@
 "use client";
 
-
-
-import { Grid, Card, CardContent, Typography,FormControl,
+import {
+  Grid,
+  Card,
+  CardContent,
+  Typography,
+  FormControl,
   Select,
-  MenuItem, } from "@mui/material";
-import { useState } from "react";
+  MenuItem,
+} from "@mui/material";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
 
 export default function FilterAndBooks() {
-    const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState("");
+  const [books, setBooks] = useState<Book[]>([]);
+    useEffect(()=>{
+      getBooks()
+    },[])
+  async function getBooks() {
+    const {data} = await axios.get("/api/books")
+    setBooks(data.books)
+  }
   return (
     <Grid
       container
@@ -25,9 +39,7 @@ export default function FilterAndBooks() {
             <Typography variant="h5" gutterBottom>
               Filters
             </Typography>
-            <Typography>
-              Status
-            </Typography>
+            <Typography>Status</Typography>
             <FormControl sx={{ minWidth: 220 }}>
               <Select
                 value={filter}
@@ -65,8 +77,8 @@ export default function FilterAndBooks() {
       <Grid size={7}>
         <Card sx={{ minWidth: 275 }}>
           <CardContent>
-            hhhhh
-          </CardContent>
+            hhhh
+            </CardContent>
         </Card>
       </Grid>
     </Grid>

@@ -1,18 +1,47 @@
-import mongoose , {Schema} from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-const BooksSchema  = new Schema(
-    {
-        title : String ,
-        authorm : String,
-        isb : String,
-        category : String,
-        publicationYear : Number,
-        description : String,
-        available : String,
+const BookSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: true,
     },
-    {
-        timestamps : true
-    }
-)
+
+    author: {
+      type: String,
+      required: true,
+    },
+
+    isbn: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+
+    category: {
+      type: String,
+      required: true,
+    },
+
+    publicationYear: {
+      type: Number,
+      required: true,
+    },
+
+    description: {
+      type: String,
+      required: true,
+    },
+
+    available: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 export default mongoose.models.Book ||
-  mongoose.model("Book", BooksSchema);
+  mongoose.model("Book", BookSchema);
