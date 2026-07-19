@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "../src/components/Header";
 import Footer from "../src/components/Footer";
+import { SearchProvider } from "@/src/context/SearchContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,18 +30,21 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body
-      >
-        <Header />
-        <main
-          style={{
-            paddingTop: "90px",
-            flex: 1,
-          }}
-        >
-          {children}
-        </main>
-        <Footer />
+      <body>
+        <SearchProvider>
+          <Header />
+
+          <main
+            style={{
+              paddingTop: "90px",
+              flex: 1,
+            }}
+          >
+            {children}
+          </main>
+
+          <Footer />
+        </SearchProvider>
       </body>
     </html>
   );

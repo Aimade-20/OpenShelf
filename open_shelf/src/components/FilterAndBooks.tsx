@@ -11,18 +11,33 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+import type { BookCardProps } from "./types/BookCardProps";
+import BookCard from "../components/BookCard";
+import { useSearch } from "@/src/context/SearchContext";
 
 export default function FilterAndBooks() {
-  const [filter, setFilter] = useState("");
-  const [books, setBooks] = useState<Book[]>([]);
-    useEffect(()=>{
-      getBooks()
-    },[])
+  const { search, filter, setFilter } = useSearch();
+  const [books, setBooks] = useState<BookCardProps[]>([]);
   async function getBooks() {
-    const {data} = await axios.get("/api/books")
-    setBooks(data.books)
+    const { data } = await axios.get("/api/books");
+    setBooks(data.books);
   }
+  useEffect(() => {
+    getBooks();
+  }, []);
+  console.log("data", books);
+const filteredBooks = books.filter((book) => {
+  const matchSearch =
+    book.title.toLowerCase().includes(search.toLowerCase()) ||
+    book.author.toLowerCase().includes(search.toLowerCase());
+
+  const matchFilter =
+    filter === "all" ||
+    (filter === "available" && book.available) ||
+    (filter === "borrowed" && !book.available);
+
+  return matchSearch && matchFilter;
+});
   return (
     <Grid
       container
@@ -32,7 +47,9 @@ export default function FilterAndBooks() {
         marginLeft: 3,
       }}
       spacing={2}
-    >
+      >
+
+
       <Grid size={3}>
         <Card sx={{ minWidth: 275 }}>
           <CardContent>
@@ -53,13 +70,13 @@ export default function FilterAndBooks() {
                       </span>
                     );
                   }
-
+                  
                   switch (selected) {
                     case "all":
                       return "Tous";
                     case "available":
                       return "Disponible";
-                    case "borrowed":
+                      case "borrowed":
                       return "Emprunté";
                     default:
                       return selected;
@@ -74,11 +91,29 @@ export default function FilterAndBooks() {
           </CardContent>
         </Card>
       </Grid>
-      <Grid size={7}>
+
+      
+      <Grid size={8.8}>
         <Card sx={{ minWidth: 275 }}>
           <CardContent>
-            hhhh
-            </CardContent>
+            <Typography variant="h5" gutterBottom>
+              Catalogue des livres
+            </Typography>
+            <Grid container spacing={3}>
+              {filteredBooks.map((book) => (
+                <Grid key={book._id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+                  <BookCard
+                    _id={book._id}
+                    title={book.title}
+                    author={book.author}
+                    category={book.category}
+                    publicationYear={book.publicationYear}
+                    available={book.available}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </CardContent>
         </Card>
       </Grid>
     </Grid>

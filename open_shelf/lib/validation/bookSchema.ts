@@ -17,7 +17,7 @@ export const bookSchema = z.object({
     .string()
     .min(1, "Category is required"),
 
-  publicationYear: z.number(),
+  publicationYear: z.coerce.number(),
 
   description: z
     .string()

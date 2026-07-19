@@ -9,17 +9,18 @@ import {
   Container,
   Box,
   Typography,
-  TextField,
   InputAdornment,
   IconButton,
 } from "@mui/material";
-
+import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { useSearch } from "@/src/context/SearchContext";
 
-import Logo from "../../public/premium_vector-1733925689480-08c807c00848.avif"
+import Logo from "../../public/premium_vector-1733925689480-08c807c00848.avif";
 
 export default function Header() {
+  const { search, setSearch } = useSearch();
   return (
     <AppBar
       elevation={0}
@@ -53,19 +54,13 @@ export default function Header() {
                 gap: 1,
               }}
             >
-              <Image
-                src={Logo}
-                alt="logo"
-                width={55}
-                height={55}
-              />
+              <Image src={Logo} alt="logo" width={55} height={55} />
 
               <Typography
-              sx={{
-                variant : "h4",
-                fontWeight : 700
-              }}
-                
+                sx={{
+                  variant: "h4",
+                  fontWeight: 700,
+                }}
               >
                 Open
                 <Box
@@ -121,6 +116,8 @@ export default function Header() {
             }}
           >
             <TextField
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
               placeholder="Rechercher un livre (titre, auteur...)"
               size="small"
               sx={{
