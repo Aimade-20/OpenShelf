@@ -5,5 +5,4 @@ export type BookCardProps  = {
   category: string;
   publicationYear: number;
   available: boolean;
-  // image?: string;
 };

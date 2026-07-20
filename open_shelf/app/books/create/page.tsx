@@ -123,6 +123,7 @@ export default function AddBookPage() {
                   <MenuItem value="Science">Science</MenuItem>
                   <MenuItem value="Informatique">Informatique</MenuItem>
                   <MenuItem value="Histoire">Histoire</MenuItem>
+                  <MenuItem value="Histoire">Développement Personnel</MenuItem>
                 </TextField>
               </Grid>
 

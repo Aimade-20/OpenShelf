@@ -3,7 +3,7 @@ import connectDB from "@/lib/mongodb";
 import Book from "@/model/Book";
 import { bookSchema } from "@/lib/validation/bookSchema";
 
-export async function GET({ params }: { params: Promise<{ id: string }> }) {
+export async function GET(request: Request,{ params }: { params: Promise<{ id: string }> }) {
   try {
     await connectDB();
     const { id } = await params;
@@ -18,6 +18,8 @@ export async function GET({ params }: { params: Promise<{ id: string }> }) {
       },
     );
   } catch (error) {
+    console.log(error);
+    
     return NextResponse.json(
       {
         success: false,

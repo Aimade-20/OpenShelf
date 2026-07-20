@@ -30,7 +30,11 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body>
+      <body style={{
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+        }}>
         <SearchProvider>
           <Header />
 

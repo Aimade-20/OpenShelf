@@ -15,15 +15,25 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
 import type { BookCardProps } from "./types/BookCardProps";
+import axios from "axios";
 
 export default function BookCard({
+  _id,
   title,
   author,
   category,
   publicationYear,
   available,
-//   image,
 }: BookCardProps) {
+  const handleDelete = async () => {
+    try {
+      const { data } = await axios.delete(`/api/books/${_id}`);
+      alert(data.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Card
       sx={{
@@ -100,20 +110,19 @@ export default function BookCard({
           }}
         >
           <Link href={`/books/${_id}`}>
-          <IconButton
-            sx={{
-              bgcolor: "#F8F9FD",
+            <IconButton
+              sx={{
+                bgcolor: "#F8F9FD",
 
-              "&:hover": {
-                bgcolor: "#5B4BDB",
-                color: "#fff",
-              },
-            }}
-          >
-            <VisibilityOutlinedIcon />
-          </IconButton>
+                "&:hover": {
+                  bgcolor: "#5B4BDB",
+                  color: "#fff",
+                },
+              }}
+            >
+              <VisibilityOutlinedIcon />
+            </IconButton>
           </Link>
-          
 
           <IconButton
             sx={{
@@ -129,6 +138,7 @@ export default function BookCard({
           </IconButton>
 
           <IconButton
+            onClick={handleDelete}
             sx={{
               bgcolor: "#F8F9FD",
 
