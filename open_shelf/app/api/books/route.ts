@@ -5,7 +5,6 @@ import { NextResponse } from "next/server"
 
 export async function POST(request : Request) {
     try {
-        
         await connectDB()
          const body = await request.json()
          const validatedData = bookSchema.parse(body)

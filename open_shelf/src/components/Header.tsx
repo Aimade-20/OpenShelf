@@ -18,9 +18,11 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useSearch } from "@/src/context/SearchContext";
 
 import Logo from "../../public/premium_vector-1733925689480-08c807c00848.avif";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const { search, setSearch } = useSearch();
+  const patName = usePathname()
   return (
     <AppBar
       elevation={0}
@@ -82,12 +84,12 @@ export default function Header() {
               }}
             >
               <Link
+              className={`${patName == "/" ? "bottom-hader" : ""}`}
                 href="/"
                 style={{
                   textDecoration: "none",
                   color: "#111827",
                   fontWeight: 600,
-                  borderBottom: "3px solid #F97316",
                   paddingBottom: "6px",
                 }}
               >
@@ -95,6 +97,7 @@ export default function Header() {
               </Link>
 
               <Link
+              className={`${patName == "/books/create" ? "bottom-hader" : ""}`}
                 href="/books/create"
                 style={{
                   textDecoration: "none",
